@@ -1,5 +1,6 @@
 local Debug = require("salesforce.debug")
 
+local Job = require("plenary.job")
 local M = {}
 local namespace = vim.api.nvim_create_namespace("salesforce.util")
 
@@ -120,6 +121,35 @@ function M.salesforce_cli_available()
         return true
     end
     return false
+end
+
+M.send_cli_command = function(command, on_exit_callback, category, caller_name)
+    vim.schedule(function()
+        Debug:log(caller_name, "Executing command %s", command)
+    end)
+    local args = M.split(command, " ")
+    table.remove(args, 1)
+    local new_job = Job:new({
+        command = M.get_sf_executable(),
+        env = M.get_env(),
+        args = args,
+        on_exit = on_exit_callback,
+        on_stderr = function(_, data)
+            vim.schedule(function()
+                Debug:log(caller_name, "command stderr is: %s", data)
+                Debug:log(string.format("%s", data))
+                vim.notify(data, vim.log.levels.ERROR)
+            end)
+        end,
+    })
+    if not M[category] or M[category].current_job or not M[category].current_job:is_running() then
+        M[category] = {}
+        M[category].current_job = new_job
+        M[category].current_bufnr = vim.api.nvim_get_current_buf()
+        M[category].current_job:start()
+    else
+        M.notify_command_in_progress(category)
+    end
 end
 
 local function get_apex_ls_namespace()
