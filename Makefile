@@ -16,7 +16,6 @@ deps:
 	@mkdir -p deps
 	@test -d deps/mini.nvim || git clone --depth 1 https://github.com/echasnovski/mini.nvim deps/mini.nvim
 	@test -d deps/plenary.nvim || git clone --depth 1 https://github.com/nvim-lua/plenary.nvim.git deps/plenary.nvim
-	@test -d deps/nvim-treesitter || git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter.git deps/nvim-treesitter
 
 test-ci: deps test
 
