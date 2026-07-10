@@ -56,7 +56,6 @@ use {
     "jonathanmorris180/salesforce.nvim",
     requires = {
         "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter"
     }
 }
 ```
@@ -74,7 +73,6 @@ use {
 ```lua
 Plug "jonathanmorris180/salesforce.nvim"
     Plug "nvim-lua/plenary.nvim"
-    Plug "nvim-treesitter/nvim-treesitter"
 ```
 
 </td>
@@ -92,7 +90,6 @@ Plug "jonathanmorris180/salesforce.nvim"
     "jonathanmorris180/salesforce.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
     }
 }
 ```

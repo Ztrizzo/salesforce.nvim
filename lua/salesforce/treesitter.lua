@@ -1,5 +1,3 @@
-local ts_utils = require("nvim-treesitter.ts_utils")
-
 local M = {}
 
 -- Find parent nodes by type
@@ -48,7 +46,7 @@ local function has_istest_annotation(expr)
 end
 
 local get_declaration_name = function(type)
-    local current_node = ts_utils.get_node_at_cursor()
+    local current_node = vim.treesitter.get_node()
     if not current_node then
         return nil
     end
